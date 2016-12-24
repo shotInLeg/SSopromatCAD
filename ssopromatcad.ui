@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SSopromatCAD</class>
+ <widget class="QMainWindow" name="SSopromatCAD">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>782</width>
+    <height>431</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SSopromatCAD</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	font-family: DejaVu Sans Mono;
+}
+QMainWindow, QWidget#centralWidget, QWidget#twMainWindow, QWidget#twPreproccessor
+{
+	border: none;
+}
+
+QWidget#centralWidget
+{
+	background-color: rgb(0, 0, 127);
+}
+
+QWidget#tabPreproccessor, QWidget#tabProccessor, QWidget#tabPostproccessor,
+QWidget#tabPreData, QWidget#tabPreView,  QWidget#sawPreData
+{
+	background-color: rgb(0, 85, 127);
+	border: none;
+}
+QTabBar::tab
+ {
+	width: 100px;
+	background-color: rgb(0, 170, 127);
+    padding: 2px;
+	color: rgb(255,255,255);
+	font-size: 14pt;
+	border-bottom: 2px solid white;
+	border-right: 2px solid white
+}
+QTabBar#twPreproccessor::tab
+{
+	height: 50px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover 
+{
+   	background-color: rgb(85, 255, 127);
+}
+
+QTabBar::tab:selected 
+{
+	background-color: rgb(0, 170, 255);
+}
+
+QPushButton
+{
+	height:50px;
+	font-size: 16pt;
+	background-color: rgb(255, 255, 255);
+	padding-left: 10px;
+	padding-right: 10px;	
+}</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="twMainWindow">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::West</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="elideMode">
+       <enum>Qt::ElideMiddle</enum>
+      </property>
+      <property name="usesScrollButtons">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tabPreproccessor">
+       <attribute name="icon">
+        <iconset resource="recourses.qrc">
+         <normaloff>:/icon/resource/preproccessor.png</normaloff>:/icon/resource/preproccessor.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Препроцессор</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTabWidget" name="twPreproccessor">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tabPreData">
+           <attribute name="title">
+            <string>Данные</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QScrollArea" name="saPreData">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="sawPreData">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>-148</y>
+                 <width>653</width>
+                 <height>520</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <layout class="QHBoxLayout" name="hl1">
+                  <property name="topMargin">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lCountNode">
+                    <property name="font">
+                     <font>
+                      <family>DejaVu Sans Mono</family>
+                      <pointsize>14</pointsize>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: white;</string>
+                    </property>
+                    <property name="text">
+                     <string>Количество узлов:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="sbCountNode">
+                    <property name="font">
+                     <font>
+                      <family>DejaVu Sans Mono</family>
+                      <pointsize>14</pointsize>
+                     </font>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="hl2">
+                  <property name="topMargin">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <widget class="QTableWidget" name="twNode">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>120</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="selectionMode">
+                     <enum>QAbstractItemView::SingleSelection</enum>
+                    </property>
+                    <property name="sortingEnabled">
+                     <bool>true</bool>
+                    </property>
+                    <column>
+                     <property name="text">
+                      <string>x</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTableWidget" name="twSupport">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                    <property name="selectionMode">
+                     <enum>QAbstractItemView::SingleSelection</enum>
+                    </property>
+                    <property name="sortingEnabled">
+                     <bool>true</bool>
+                    </property>
+                    <column>
+                     <property name="text">
+                      <string>A</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>E</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>G</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="hl3">
+                  <property name="topMargin">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_8">
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout">
+                      <property name="topMargin">
+                       <number>10</number>
+                      </property>
+                      <item>
+                       <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="lCountF">
+                        <property name="font">
+                         <font>
+                          <family>DejaVu Sans Mono</family>
+                          <pointsize>14</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: white;</string>
+                        </property>
+                        <property name="text">
+                         <string>Количество F</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSpinBox" name="sbCountF">
+                        <property name="font">
+                         <font>
+                          <family>DejaVu Sans Mono</family>
+                          <pointsize>14</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_2">
+                      <property name="topMargin">
+                       <number>10</number>
+                      </property>
+                      <item>
+                       <widget class="QTableWidget" name="twF">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>150</height>
+                         </size>
+                        </property>
+                        <property name="selectionMode">
+                         <enum>QAbstractItemView::SingleSelection</enum>
+                        </property>
+                        <property name="sortingEnabled">
+                         <bool>true</bool>
+                        </property>
+                        <column>
+                         <property name="text">
+                          <string>№ узла</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>x F</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>y F</string>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
+                      <property name="topMargin">
+                       <number>10</number>
+                      </property>
+                      <item>
+                       <spacer name="horizontalSpacer_3">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="lCountQ">
+                        <property name="font">
+                         <font>
+                          <family>DejaVu Sans Mono</family>
+                          <pointsize>14</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: white;</string>
+                        </property>
+                        <property name="text">
+                         <string>Количество Q</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSpinBox" name="sbCountQ">
+                        <property name="font">
+                         <font>
+                          <family>DejaVu Sans Mono</family>
+                          <pointsize>14</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_6">
+                      <property name="topMargin">
+                       <number>10</number>
+                      </property>
+                      <item>
+                       <widget class="QTableWidget" name="twQ">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>150</height>
+                         </size>
+                        </property>
+                        <property name="selectionMode">
+                         <enum>QAbstractItemView::SingleSelection</enum>
+                        </property>
+                        <property name="sortingEnabled">
+                         <bool>true</bool>
+                        </property>
+                        <column>
+                         <property name="text">
+                          <string>№ опоры</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>x Q</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>y Q</string>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <property name="topMargin">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bSave">
+                    <property name="font">
+                     <font>
+                      <family>DejaVu Sans Mono</family>
+                      <pointsize>16</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgba(255,255,255,0.5); color: cyan;</string>
+                    </property>
+                    <property name="text">
+                     <string>СОХРАНИТЬ</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabPreView">
+           <attribute name="title">
+            <string>Отрисовка</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_5"/>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabProccessor">
+       <attribute name="icon">
+        <iconset resource="recourses.qrc">
+         <normaloff>:/icon/resource/proccessor.png</normaloff>:/icon/resource/proccessor.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Процессор</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabPostproccessor">
+       <attribute name="icon">
+        <iconset resource="recourses.qrc">
+         <normaloff>:/icon/resource/postproccessor.png</normaloff>:/icon/resource/postproccessor.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Постпроцессор</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="aCreate"/>
+   <addaction name="aOpen"/>
+   <addaction name="aSave"/>
+  </widget>
+  <action name="aOpen">
+   <property name="icon">
+    <iconset resource="recourses.qrc">
+     <normaloff>:/icon/resource/openIcon.png</normaloff>:/icon/resource/openIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+  </action>
+  <action name="aCreate">
+   <property name="icon">
+    <iconset resource="recourses.qrc">
+     <normaloff>:/icon/resource/newIcon.png</normaloff>:/icon/resource/newIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Создать</string>
+   </property>
+  </action>
+  <action name="aSave">
+   <property name="icon">
+    <iconset resource="recourses.qrc">
+     <normaloff>:/icon/resource/saveIcon.png</normaloff>:/icon/resource/saveIcon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="recourses.qrc"/>
+ </resources>
+ <connections/>
+</ui>

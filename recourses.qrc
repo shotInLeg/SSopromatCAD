@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>resource/newIcon.png</file>
+        <file>resource/openIcon.png</file>
+        <file>resource/saveIcon.png</file>
+        <file>resource/postproccessor.png</file>
+        <file>resource/preproccessor.png</file>
+        <file>resource/proccessor.png</file>
+    </qresource>
+</RCC>
