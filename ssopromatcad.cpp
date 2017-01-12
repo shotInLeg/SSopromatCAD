@@ -7,6 +7,9 @@ SSopromatCAD::SSopromatCAD(QWidget *parent) :
 {
     ui->setupUi(this);
     preproc = new SSKPreProccessor;
+    render = new SQRenderWidget( preproc );
+
+    ui->scrollAreaWidgetContents->layout()->addWidget( render );
 }
 
 SSopromatCAD::~SSopromatCAD()
@@ -40,6 +43,8 @@ void SSopromatCAD::on_bSave_clicked()
     updateQKernel();
 
     preproc->debugView();
+
+    render->repaint();
 }
 
 void SSopromatCAD::updateSupportKernel()
@@ -66,9 +71,9 @@ void SSopromatCAD::updateFKernel()
 
     for( int i = 0; i < countRows; i++ )
     {
-        int n = i;
-        int xF = ui->twF->item( i, 0 )->text().toInt();
-        int yF = ui->twF->item( i, 1 )->text().toInt();
+        int n = ui->twF->item( i, 0 )->text().toInt();;
+        int xF = ui->twF->item( i, 1 )->text().toInt();
+        int yF = ui->twF->item( i, 2 )->text().toInt();
 
 
         preproc->addF( n, xF, yF );
@@ -81,10 +86,9 @@ void SSopromatCAD::updateQKernel()
 
     for( int i = 0; i < countRows; i++ )
     {
-        int n = i;
-        int xQ = ui->twQ->item( i, 0 )->text().toInt();
-        int yQ = ui->twQ->item( i, 1 )->text().toInt();
-
+        int n = ui->twQ->item( i, 0 )->text().toInt();;
+        int xQ = ui->twQ->item( i, 1 )->text().toInt();
+        int yQ = ui->twQ->item( i, 2 )->text().toInt();
 
         preproc->addQ( n, xQ, yQ );
     }
@@ -99,4 +103,16 @@ void SSopromatCAD::updateNodeKernel()
         QTableWidgetItem * curItem = ui->twNode->item( i, 0 );
         preproc->addNode( curItem->text().toDouble() );
     }
+}
+
+void SSopromatCAD::on_bUpScale_clicked()
+{
+    render->upScale();
+    render->repaint();
+}
+
+void SSopromatCAD::on_bDownScale_clicked()
+{
+    render->downScale();
+    render->repaint();
 }

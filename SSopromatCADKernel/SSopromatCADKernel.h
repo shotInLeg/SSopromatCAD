@@ -13,11 +13,18 @@ struct Node
     int xF;
     int yF;
 
-    Node(){}
+    Node()
+    {
+        this->x = 0;
+        this->xF = 0;
+        this->yF = 0;
+    }
 
     Node( int x )
     {
         this->x = x;
+        this->xF = 0;
+        this->yF = 0;
     }
 };
 
@@ -31,7 +38,16 @@ struct Support
     int xQ;
     int yQ;
 
-    Support(){}
+    Support()
+    {
+        this->startX = 0;
+        this->L = 0;
+        this->A = 0;
+        this->E = 0;
+        this->G = 0;
+        this->xQ = 0;
+        this->yQ = 0;
+    }
 
     Support( int startX, double L, double A, double E, double G )
     {
@@ -40,6 +56,8 @@ struct Support
         this->A = A;
         this->E = E;
         this->G = G;
+        this->xQ = 0;
+        this->yQ = 0;
     }
 
 
@@ -78,6 +96,16 @@ public:
 
         _supports[numSup].xQ = xQ;
         _supports[numSup].yQ = yQ;
+    }
+
+    QVector<Support> supports() const
+    {
+        return this->_supports;
+    }
+
+    QVector<Node> nodes() const
+    {
+        return this->_nodes;
     }
 
     void debugView() const
