@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPainter>
+#include <QTableWidget>
 
 #include "SSopromatCADKernel/SSopromatCADKernel.h"
 
@@ -24,7 +25,7 @@ public:
 
     void upScale()
     {
-        if( this->scale == 10 )
+        if( this->scale == 100 )
             return;
 
         this->scale+=0.25;
@@ -174,11 +175,178 @@ public:
             }
         }
 
-        this->setMinimumWidth( width+20 );
+        this->setMinimumWidth( width+50 );
     }
 
 private:
     SSKPreProccessor * preproc;
+    double scale;
+};
+
+class SQCurveWidget : public QWidget
+{
+public:
+    explicit SQCurveWidget(QWidget *parent = 0){ this->scale = 1; }
+    explicit SQCurveWidget(SSKPreProccessor * preproc, SSKPostProccessor * postproc, QWidget *parent = 0)
+    {
+        this->scale = 1;
+        this->preproc = preproc;
+        this->postproc = postproc;
+
+        this->viewNpx = false;
+        this->viewUpx = true;
+        this->viewPpx = false;
+    }
+    ~SQCurveWidget(){}
+
+    void upScale()
+    {
+        if( this->scale == 100 )
+            return;
+
+        this->scale+=0.25;
+    }
+
+    void downScale()
+    {
+        if( this->scale == 0.25 )
+            return;
+
+        this->scale-=0.25;
+    }
+
+    void paintEvent(QPaintEvent *)
+    {
+        QVector< QVector<double> > npx = postproc->NPX();
+        QVector< QVector<double> > upx = postproc->UPX();
+        QVector< QVector<double> > ppx = postproc->PPX();
+        //double scale = frameSize().height() / 4;
+
+        for( int i = 0; i < npx.size(); i++ )
+        {
+            for(int j = 0; j < npx.at(i).size(); j++)
+            {
+                npx[i][j] = npx[i][j]  * frameSize().height() / 4;
+                upx[i][j] = upx[i][j] * frameSize().height() / 4;
+                ppx[i][j] = ppx[i][j] * frameSize().height() / 4;
+            }
+        }
+
+
+        QVector<Support> supports = this->preproc->supports();
+
+        int countSupports = this->preproc->supports().size();
+        int totalL = 0;
+        int countSection = 50;
+        for( int i = 0; i < this->preproc->supports().size(); i++ )
+        {
+            totalL += this->preproc->supports().at(i).L;
+        }
+
+
+        QPainter painter(this);
+        double fu = 0;
+        int x = 0;
+        int y = 0;
+        y =(frameSize().height() )/4;
+        x = 0;
+        painter.translate(0, 0);
+        painter.drawText(10, frameSize().height()/4, "+");
+        painter.drawText(10, frameSize().height()/4 + frameSize().height()/4+ frameSize().height()/4, "-");
+
+        painter.translate(x, y);
+
+        double num = 0;
+        int size = 0;
+        int check = 0;
+        painter.translate(x,y);
+        painter.drawLine(0, 0, frameSize().width(), 0);
+        painter.drawLine(0, 0, -frameSize().width(), 0);
+
+        if(viewUpx == true)
+        {
+            for(int i = 0; i < upx.size(); i++)
+            {
+
+                size =  upx.at(i).size() -1;
+                fu = supports.at(i).L / countSection * frameSize().height() /4;
+
+                int j =0;
+                while(j < size)
+                {
+                    painter.drawLine(num, upx.at(i).at(j), num+fu, upx.at(i).at(j+1));
+                    j++;
+                    painter.drawLine(num, upx.at(i).at(j),num, 0 );
+                    num += fu;
+
+                }
+                painter.drawLine(num,frameSize().width(), num, -frameSize().width() );
+                painter.drawText(num, 0, QString::number( supports.at(i).L) );
+                fu = 0;
+            }
+        }
+
+        num = 0;
+        size =0;
+        fu = 0;
+
+        if(viewNpx == true)
+        {
+            qDebug() << "NPX: " << npx;
+            for(int i = 0; i < npx.size(); i++)
+            {
+                fu = supports.at(i).L / countSection * frameSize().width() /6;
+                size =  npx.at(i).size() - 1;
+
+
+                int j =0;
+                while(j < size)
+                {
+                    painter.drawLine(num, npx.at(i).at(j), num+fu, npx.at(i).at(j+1));
+                    j++;
+                    painter.drawLine(num, npx.at(i).at(j),num, 0 );
+                    num += fu;
+
+                }
+                painter.drawLine(num,frameSize().width(), num, -frameSize().width() );
+                painter.drawText(num, 0, QString::number(supports.at(i).L));
+                fu = 0;
+            }
+        }
+
+        if(viewPpx == true)
+        {
+            for(int i = 0; i < ppx.size(); i++)
+            {
+
+                fu = supports.at(i).L / countSection * frameSize().width() /6;
+                size =  ppx.at(i).size() - 1;
+
+
+                int j =0;
+                while(j < size)
+                {
+                    painter.drawLine(num, ppx.at(i).at(j), num+fu, ppx.at(i).at(j+1));
+                    j++;
+                    painter.drawLine(num, ppx.at(i).at(j),num, 0 );
+                    num += fu;
+
+                }
+                painter.drawLine(num,frameSize().width(), num, -frameSize().width() );
+                painter.drawText(num, 0, QString::number( supports.at(i).L ));
+                fu = 0;
+            }
+        }
+    }
+
+private:
+    SSKPreProccessor * preproc;
+    SSKPostProccessor * postproc;
+
+    bool viewNpx;
+    bool viewUpx;
+    bool viewPpx;
+
     double scale;
 };
 
@@ -203,6 +371,14 @@ private slots:
 
     void on_bDownScale_clicked();
 
+    void on_twMainWindow_currentChanged(int index);
+
+    void printTable( QTableWidget * table, QVector< QVector< double > > mtx );
+
+    void on_bScaleUpCurve_clicked();
+
+    void on_bScaleDownCurve_clicked();
+
 private:
     void updateNodeKernel();
     void updateSupportKernel();
@@ -212,7 +388,10 @@ private:
 private:
     Ui::SSopromatCAD *ui;
     SQRenderWidget * render;
+    SQCurveWidget * curve;
     SSKPreProccessor * preproc;
+    SSKProccessor * proc;
+    SSKPostProccessor * postproc;
 };
 
 #endif // SSOPROMATCAD_H

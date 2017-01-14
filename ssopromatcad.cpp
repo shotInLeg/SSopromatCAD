@@ -71,7 +71,7 @@ void SSopromatCAD::updateFKernel()
 
     for( int i = 0; i < countRows; i++ )
     {
-        int n = ui->twF->item( i, 0 )->text().toInt();;
+        int n = ui->twF->item( i, 0 )->text().toInt()-1;
         int xF = ui->twF->item( i, 1 )->text().toInt();
         int yF = ui->twF->item( i, 2 )->text().toInt();
 
@@ -86,7 +86,7 @@ void SSopromatCAD::updateQKernel()
 
     for( int i = 0; i < countRows; i++ )
     {
-        int n = ui->twQ->item( i, 0 )->text().toInt();;
+        int n = ui->twQ->item( i, 0 )->text().toInt()-1;
         int xQ = ui->twQ->item( i, 1 )->text().toInt();
         int yQ = ui->twQ->item( i, 2 )->text().toInt();
 
@@ -115,4 +115,67 @@ void SSopromatCAD::on_bDownScale_clicked()
 {
     render->downScale();
     render->repaint();
+}
+
+void SSopromatCAD::on_twMainWindow_currentChanged(int index)
+{
+    if( index == 1 )
+    {
+        proc = new SSKProccessor( preproc );
+
+        QVector< double > d = this->proc->gauss();
+
+        QString text = "";
+        for( int i = 0; i < d.size(); i++ )
+        {
+            text += "d" + QString::number(i+1) + " = " + QString::number( d.at(i) ) + "; ";
+        }
+
+        ui->lDelta->setText( text );
+
+        postproc = new SSKPostProccessor( preproc, d );
+    }
+
+    if( index == 2 )
+    {
+        postproc->proccess();
+
+        QVector< QVector<double> > npx = postproc->NPX();
+        QVector< QVector<double> > upx = postproc->UPX();
+        QVector< QVector<double> > ppx = postproc->PPX();
+
+        printTable( ui->twNpx, npx);
+        printTable( ui->twUpx, upx);
+        printTable( ui->twPpx, ppx);
+
+        curve = new SQCurveWidget( preproc, postproc );
+        ui->wCurve->layout()->addWidget( curve );
+    }
+}
+
+void SSopromatCAD::printTable(QTableWidget *table, QVector<QVector<double> > mtx)
+{
+    table->setRowCount( mtx.at(0).size() );
+    table->setColumnCount( mtx.size() );
+
+    for( int i = 0; i < mtx.size(); i++ )
+    {
+        for( int j = 0; j < mtx.at(i).size(); j++ )
+        {
+            table->setItem( j, i, new QTableWidgetItem( QString::number( mtx.at(i).at(j) ) ) );
+            //table->item(j, i)->setText( QString::number( mtx.at(i).at(j) ) );
+        }
+    }
+}
+
+void SSopromatCAD::on_bScaleUpCurve_clicked()
+{
+   curve->upScale();
+   curve->repaint();
+}
+
+void SSopromatCAD::on_bScaleDownCurve_clicked()
+{
+    curve->downScale();
+    curve->repaint();
 }
