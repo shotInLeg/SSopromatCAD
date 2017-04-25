@@ -14,12 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ssopromatcad.cpp \
-    SSopromatCADKernel/SSopromatCADKernel.cpp
+    SSopromatCADKernel/SSopromatCADKernel.cpp \
+    startform.cpp
 
 HEADERS  += ssopromatcad.h \
-    SSopromatCADKernel/SSopromatCADKernel.h
+    SSopromatCADKernel/SSopromatCADKernel.h \
+    startform.h
 
-FORMS    += ssopromatcad.ui
+FORMS    += ssopromatcad.ui \
+    startform.ui
 
 RESOURCES += \
     recourses.qrc

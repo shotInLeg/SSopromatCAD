@@ -6,5 +6,7 @@
         <file>resource/postproccessor.png</file>
         <file>resource/preproccessor.png</file>
         <file>resource/proccessor.png</file>
+        <file>resource/shotInLeg_splash_crcl.png</file>
+        <file>resource/stankin-logo_2.png</file>
     </qresource>
 </RCC>
