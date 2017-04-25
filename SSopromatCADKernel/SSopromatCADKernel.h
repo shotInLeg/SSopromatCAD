@@ -77,11 +77,13 @@ public:
         _nodes.push_back( Node( x ) );
     }
 
-    void addSupport( int sn, int en, double A, double E, double G )
+    void addSupport( double A, double E, double G )
     {
-        int L = _nodes.at(en).x - _nodes.at(sn).x;
+        int number = _supports.size();
 
-        _supports.push_back( Support( _nodes.at(sn).x, L, A, E, G ) );
+        int L = _nodes.at(number+1).x - _nodes.at(number).x;
+
+        _supports.push_back( Support( _nodes.at(number).x, L, A, E, G ) );
     }
 
     void addF( int numNode, int xF, int yF )
@@ -101,6 +103,7 @@ public:
         _supports[numSup].xQ = xQ;
         _supports[numSup].yQ = yQ;
     }
+
 
     QVector<Support> supports() const
     {

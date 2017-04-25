@@ -350,6 +350,65 @@ private:
     double scale;
 };
 
+
+
+class node
+{
+public:
+    int x;
+
+    node():x(0){}
+
+    bool operator<(const node& b)
+    {
+        return this->x < b.x;
+    }
+};
+
+class support
+{
+public:
+    int A;
+    int E;
+    int G;
+
+    support():A(0),E(0),G(0){}
+
+    bool operator<(const support& b)
+    {
+        return this->A < b.A;
+    }
+};
+
+class fpower
+{
+public:
+    int num_node;
+    int value;
+
+    fpower():num_node(0),value(0){}
+
+    bool operator<(const fpower& b)
+    {
+        return this->num_node < b.num_node;
+    }
+};
+
+class qpower
+{
+public:
+    int num_support;
+    int value;
+
+    qpower():num_support(0),value(0){}
+
+    bool operator<(const qpower& b)
+    {
+        return this->num_support < b.num_support;
+    }
+};
+
+
 class SSopromatCAD : public QMainWindow
 {
     Q_OBJECT
@@ -359,6 +418,7 @@ public:
     ~SSopromatCAD();
 
 private slots:
+    /*
     void on_sbCountNode_valueChanged(int arg1);
 
     void on_sbCountF_valueChanged(int arg1);
@@ -372,14 +432,84 @@ private slots:
     void on_bDownScale_clicked();
 
     void on_twMainWindow_currentChanged(int index);
+    */
 
     void printTable( QTableWidget * table, QVector< QVector< double > > mtx );
 
+    /*
     void on_bScaleUpCurve_clicked();
 
     void on_bScaleDownCurve_clicked();
+    */
+
+    void on_twListsObj_currentChanged(int index);
+
+    void on_bAdd_clicked();
+
+    void on_lwSupports_currentRowChanged(int currentRow);
+
+    void on_lwNodes_currentRowChanged(int currentRow);
+
+    void on_lwFPowers_currentRowChanged(int currentRow);
+
+    void on_lwQPowers_currentRowChanged(int currentRow);
+
+    void on_sbQSupportNumber_editingFinished();
+
+    void on_sbQValue_editingFinished();
+
+    void on_sbNodeX_editingFinished();
+
+    void on_sbSupportA_editingFinished();
+
+    void on_sbSupportE_editingFinished();
+
+    void on_sbSupportG_editingFinished();
+
+    void on_sbFNodeNumber_editingFinished();
+
+    void on_sbFValue_editingFinished();
+
+    void on_aStart_triggered();
 
 private:
+    void addNode();
+    void addSupport();
+    void addFPower();
+    void addQPower();
+
+    void updateNode(int row);
+    void updateSupport(int row);
+    void updateFPower(int row);
+    void updateQPower(int row);
+
+    template<class T>
+    QVector<T> sort(const QVector<T>& list)
+    {
+        if(list.size() == 0)
+            return list;
+
+        QVector<T> sorted = list;
+
+        for(int i = 0; i < sorted.size()-1; i++)
+        {
+            for(auto j = i+1; j < sorted.size(); j++)
+            {
+                if( sorted[j] < sorted[i] )
+                {
+                    T temp = sorted[j];
+                    sorted[j] = sorted[i];
+                    sorted[i] = temp;
+                }
+            }
+        }
+
+        return sorted;
+    }
+
+    void prepareAndView();
+    void viewStats(int row);
+
     void updateNodeKernel();
     void updateSupportKernel();
     void updateFKernel();
@@ -392,6 +522,13 @@ private:
     SSKPreProccessor * preproc;
     SSKProccessor * proc;
     SSKPostProccessor * postproc;
+
+    int currentObjects;
+
+    QVector<node> nodes;
+    QVector<support> supports;
+    QVector<fpower> fpowers;
+    QVector<qpower> qpowers;
 };
 
 #endif // SSOPROMATCAD_H
